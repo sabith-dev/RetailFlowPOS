@@ -36,18 +36,57 @@ RetailFlow POS is a full-featured POS and billing software with two portals:
 
 ## Technology Stack
 
-| Layer     | Technology                          |
-|-----------|-------------------------------------|
-| Backend   | Python, Django 6.x                  |
-| Database  | SQLite (dev) / PostgreSQL ready     |
-| Frontend  | HTML, CSS, Bootstrap 5, JavaScript  |
-| Auth      | Django Authentication + Roles       |
-| Other     | Pillow, python-dotenv               |
+| Layer     | Technology                         |
+|-----------|------------------------------------|
+| Backend   | Python, Django 6.x                 |
+| Database  | SQLite (dev) / PostgreSQL ready    |
+| Frontend  | HTML, CSS, Bootstrap 5, JavaScript |
+| Auth      | Django Authentication + Roles      |
+| Other     | Pillow, python-dotenv              |
 
+## Installation
 
-PurposeURLLoginhttp://127.0.0.1:8000/accounts/login/Admin Dashboardhttp://127.0.0.1:8000/admin/POS Billinghttp://127.0.0.1:8000/billing/pos/Mobile Admin UIhttp://127.0.0.1:8000/admin/mobile/Productshttp://127.0.0.1:8000/admin/products/Suppliershttp://127.0.0.1:8000/admin/suppliers/Staffhttp://127.0.0.1:8000/accounts/staff/Returnshttp://127.0.0.1:8000/admin/returns/Ledgerhttp://127.0.0.1:8000/admin/ledger/Reportshttp://127.0.0.1:8000/admin/reports/
-Project Structure
-textRetailFlowPOS/
+```bash
+git clone https://github.com/sabith-dev/RetailFlowPOS.git
+cd RetailFlowPOS
+
+python -m venv venv
+venv\Scripts\activate          # Windows
+# source venv/bin/activate     # Mac/Linux
+
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
+```
+
+Open: http://127.0.0.1:8000/accounts/login/
+
+## Test Credentials
+
+| Role  | Username | Password |
+|-------|----------|----------|
+| Admin | admin    | admin123 |
+| Staff | staff1   | staff123 |
+
+## Important URLs
+
+| Purpose           | URL                                        |
+|-------------------|--------------------------------------------|
+| Login             | http://127.0.0.1:8000/accounts/login/      |
+| Admin Dashboard   | http://127.0.0.1:8000/admin/               |
+| POS Billing       | http://127.0.0.1:8000/billing/pos/         |
+| Mobile Admin UI   | http://127.0.0.1:8000/admin/mobile/        |
+| Products          | http://127.0.0.1:8000/admin/products/      |
+| Suppliers         | http://127.0.0.1:8000/admin/suppliers/     |
+| Staff             | http://127.0.0.1:8000/accounts/staff/      |
+| Returns           | http://127.0.0.1:8000/admin/returns/       |
+| Ledger            | http://127.0.0.1:8000/admin/ledger/        |
+| Reports           | http://127.0.0.1:8000/admin/reports/       |
+
+## Project Structure
+
+```text
+RetailFlowPOS/
 ├── accounts/          # Auth, Staff management
 ├── products/          # Product CRUD
 ├── suppliers/         # Supplier CRUD
@@ -59,10 +98,12 @@ textRetailFlowPOS/
 ├── templates/         # HTML templates
 ├── static/            # CSS, JS
 └── config/            # Settings, URLs
-Assumptions & Notes
+```
 
-SQLite is used by default for easy setup. PostgreSQL config is ready in settings.py.
-Soft delete (is_active) is used for Products, Suppliers, and Staff.
-Invoice format: INV-YYYYMMDD-XXXX
-Stock is automatically reduced on sale and increased on return.
-Role-based access control: Admin has full access, Staff can only use Billing portal.
+## Assumptions & Notes
+
+- SQLite is used by default for easy setup. PostgreSQL config is ready in settings.py.
+- Soft delete (is_active) is used for Products, Suppliers, and Staff.
+- Invoice format: `INV-YYYYMMDD-XXXX`
+- Stock is automatically reduced on sale and increased on return.
+- Role-based access control: Admin has full access, Staff can only use Billing portal.
