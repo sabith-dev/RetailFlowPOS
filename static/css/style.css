@@ -36,37 +36,130 @@ body {
     line-height: 1.6;
 }
 
-/* ---------- Navbar ---------- */
+/* ========== PROFESSIONAL NAVBAR STRUCTURE ========== */
 .navbar {
-    background: linear-gradient(135deg, var(--primary) 0%, #6366f1 100%) !important;
-    box-shadow: 0 2px 20px rgba(79, 70, 229, 0.3);
-    padding: 0.7rem 1rem;
+    background: #0f172a !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    padding: 0.55rem 0;
+    min-height: 58px;
 }
 
 .navbar-brand {
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: #f8fafc !important;
+    letter-spacing: -0.2px;
+}
+
+.navbar-brand strong {
     font-weight: 700;
-    font-size: 1.3rem;
-    letter-spacing: 0.3px;
+    color: #a5b4fc;
 }
 
 .navbar-brand i {
-    margin-right: 6px;
+    color: #818cf8;
 }
 
-.nav-link {
+.navbar .nav-link {
+    color: #94a3b8 !important;
     font-weight: 500;
+    font-size: 0.875rem;
+    padding: 0.4rem 0.75rem !important;
     border-radius: 8px;
-    padding: 0.45rem 0.9rem !important;
-    transition: var(--transition);
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-.nav-link:hover {
-    background: rgba(255, 255, 255, 0.15);
+.navbar .nav-link i {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.navbar .nav-link:hover {
+    color: #f1f5f9 !important;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.navbar .nav-link.active {
+    color: #ffffff !important;
+    background: rgba(99, 102, 241, 0.2);
+}
+
+.navbar .nav-link.active i {
+    color: #a5b4fc;
+}
+
+/* User avatar circle */
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
 .navbar .badge {
-    font-size: 0.7rem;
-    padding: 0.3em 0.6em;
+    font-size: 0.62rem;
+    padding: 0.25em 0.5em;
+    border-radius: 4px;
+    background: #312e81 !important;
+    color: #c7d2fe;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+}
+
+/* Dropdown */
+.navbar .dropdown-menu {
+    background: #1e293b;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    padding: 0.4rem;
+    margin-top: 8px !important;
+}
+
+.navbar .dropdown-item {
+    color: #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    padding: 0.5rem 0.85rem;
+    display: flex;
+    align-items: center;
+}
+
+.navbar .dropdown-item:hover {
+    background: rgba(99, 102, 241, 0.15);
+    color: #fff;
+}
+
+.navbar .dropdown-item.text-danger:hover {
+    background: rgba(239, 68, 68, 0.15);
+    color: #fca5a5;
+}
+
+.navbar .dropdown-divider {
+    border-color: rgba(255, 255, 255, 0.06);
+    margin: 0.3rem 0;
+}
+
+/* Toggler for mobile */
+.navbar-toggler {
+    border: none;
+    padding: 0.25rem;
+}
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+.navbar-toggler-icon {
+    filter: invert(1);
 }
 
 /* ---------- Cards ---------- */
