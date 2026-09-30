@@ -44,93 +44,17 @@ RetailFlow POS is a full-featured POS and billing software with two portals:
 | Auth      | Django Authentication + Roles       |
 | Other     | Pillow, python-dotenv               |
 
-## Installation
 
-```bash
-git clone https://github.com/sabith-dev/RetailFlowPOS.git
-cd RetailFlowPOS
-
-python -m venv venv
-venv\Scripts\activate          # Windows
-# source venv/bin/activate     # Mac/Linux
-
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py runserver
-Open: http://127.0.0.1:8000/accounts/login/
-Test Credentials
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-RoleUsernamePasswordAdminadminadmin123Staffstaff1staff123
-Important URLs
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-PurposeURLLoginhttp://127.0.0.1:8000/accounts/login/Admin Dashboardhttp://127.0.0.1:8000/admin/POS Billinghttp://127.0.0.1:8000/billing/pos/Mobile Admin UIhttp://127.0.0.1:8000/admin/mobile/Productshttp://127.0.0.1:8000/admin/products/Suppliershttp://127.0.0.1:8000/admin/suppliers/Staffhttp://127.0.0.1:8000/accounts/staff/Returnshttp://127.0.0.1:8000/admin/returns/Ledgerhttp://127.0.0.1:8000/admin/ledger/Reportshttp://127.0.0.1:8000/admin/reports/
+Purpose URL Login http://127.0.0.1:8000/accounts/login/
+Admin Dashboard http://127.0.0.1:8000/admin/
+POS Billing http://127.0.0.1:8000/billing/pos/
+Mobile Admin UIhttp://127.0.0.1:8000/admin/mobile/
+Products http://127.0.0.1:8000/admin/products/
+Suppliers http://127.0.0.1:8000/admin/suppliers/
+Staff http://127.0.0.1:8000/accounts/staff/
+Returns http://127.0.0.1:8000/admin/returns/
+Ledger http://127.0.0.1:8000/admin/ledger/
+Reports http://127.0.0.1:8000/admin/reports/
 Project Structure
 textRetailFlowPOS/
 ├── accounts/          # Auth, Staff management
