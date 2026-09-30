@@ -1,0 +1,28 @@
+{% extends "mobile/base_mobile.html" %}
+{% block title %}Sales – Mobile{% endblock %}
+{% block header_title %}Sales{% endblock %}
+
+{% block content %}
+<a href="{% url 'billing:pos' %}" class="btn btn-success w-100 mb-3">
+    <i class="bi bi-cart-plus"></i> New Sale
+</a>
+
+{% for sale in sales %}
+<div class="card list-card shadow-sm">
+    <a href="{% url 'billing:invoice' sale.invoice_number %}" class="text-decoration-none text-dark">
+        <div class="card-body py-2 px-3 d-flex justify-content-between align-items-center">
+            <div>
+                <div class="fw-semibold">{{ sale.invoice_number }}</div>
+                <small class="text-muted">{{ sale.customer_name }} · {{ sale.created_at|date:"d M, H:i" }}</small>
+            </div>
+            <div class="text-end">
+                <div class="fw-bold text-success">₹{{ sale.grand_total }}</div>
+                <small class="badge bg-secondary">{{ sale.get_payment_method_display }}</small>
+            </div>
+        </div>
+    </a>
+</div>
+{% empty %}
+<p class="text-muted text-center py-4">No transactions yet.</p>
+{% endfor %}
+{% endblock %}

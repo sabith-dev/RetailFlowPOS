@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% block title %}POS Billing – RetailFlow POS{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0"><i class="bi bi-cart-check"></i> Point of Sale</h2>
+        <div>
+            <span class="badge bg-primary fs-6 me-2">
+                Staff: {{ user.get_full_name|default:user.username }}
+            </span>
+            <a href="{% url 'billing:transactions' %}" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-clock-history"></i> Transactions
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-3">
+        <!-- LEFT: Products -->
+        <div class="col-lg-7">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <form method="get" class="d-flex gap-2">
+                        <input type="search" name="q" value="{{ q }}" class="form-control"
+                               placeholder="Search product by name, SKU or barcode..." autofocus>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="card-body p-0" style="max-height: 65vh; overflow-y: auto;">
+                    <div class="list-group list-group-flush">
+                        {% for p in products %}
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="fw-semibold">{{ p.name }}</div>
+                                <small class="text-muted">
+                                    {{ p.sku }}
+                                    {% if p.brand %} · {{ p.brand }}{% endif %}
+                                    {% if p.size %} · {{ p.size }}{% endif %}
+                                    {% if p.color %} · {{ p.color }}{% endif %}
+                                </small>
+                                <div>
+                                    <span class="text-success fw-bold">₹{{ p.selling_price }}</span>
+                                    <span class="badge bg-light text-dark ms-2">Stock: {{ p.stock_quantity }}</span>
+                                </div>
+                            </div>
+                            <a href="{% url 'billing:cart_add' p.pk %}" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-plus-lg"></i> Add
+                            </a>
+                        </div>
+                        {% empty %}
+                        <div class="text-center text-muted py-5">
+                            No products found. Try a different search.
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: Cart -->
+        <div class="col-lg-5">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <span class="fw-semibold">Current Bill</span>
+                    {% if cart_items %}
+                    <a href="{% url 'billing:cart_clear' %}" class="btn btn-sm btn-outline-danger"
+                       onclick="return confirm('Clear cart?')">
+                        Clear
+                    </a>
+                    {% endif %}
+                </div>
+                <div class="card-body p-0">
+                    {% if cart_items %}
+                    <div class="table-responsive" style="max-height: 280px; overflow-y: auto;">
+                        <table class="table table-sm mb-0 align-middle">
+                            <thead class="table-light sticky-top">
+                                <tr>
+                                    <th>Item</th>
+                                    <th width="90">Qty</th>
+                                    <th class="text-end">Total</th>
+                                    <th width="40"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in cart_items %}
+                                <tr>
+                                    <td>
+                                        <div class="fw-semibold small">{{ item.product.name }}</div>
+                                        <small class="text-muted">₹{{ item.unit_price }}</small>
+                                    </td>
+                                    <td>
+                                        <form method="post" action="{% url 'billing:cart_update' item.product.pk %}" class="d-flex">
+                                            {% csrf_token %}
+                                            <input type="number" name="quantity" value="{{ item.quantity }}"
+                                                   min="1" max="{{ item.product.stock_quantity }}"
+                                                   class="form-control form-control-sm" style="width:60px"
+                                                   onchange="this.form.submit()">
+                                        </form>
+                                    </td>
+                                    <td class="text-end">₹{{ item.total }}</td>
+                                    <td>
+                                        <a href="{% url 'billing:cart_remove' item.product.pk %}"
+                                           class="text-danger">
+                                            <i class="bi bi-x-lg"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-muted text-center py-4 mb-0">Cart is empty</p>
+                    {% endif %}
+                </div>
+
+                <div class="card-footer bg-white">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>Subtotal</span>
+                        <span>₹{{ subtotal }}</span>
+                    </div>
+
+                    <form method="post" action="{% url 'billing:apply_discount' %}" class="d-flex gap-2 mb-2">
+                        {% csrf_token %}
+                        <input type="number" name="discount" value="{{ discount }}" step="0.01" min="0"
+                               class="form-control form-control-sm" placeholder="Discount">
+                        <button type="submit" class="btn btn-sm btn-outline-secondary">Apply</button>
+                    </form>
+
+                    <div class="d-flex justify-content-between fw-bold fs-5 border-top pt-2">
+                        <span>Total</span>
+                        <span class="text-success">₹{{ grand_total }}</span>
+                    </div>
+
+                    {% if cart_items %}
+                    <hr>
+                    <form method="post" action="{% url 'billing:checkout' %}">
+                        {% csrf_token %}
+                        <div class="mb-2">
+                            <input type="text" name="customer_name" class="form-control form-control-sm"
+                                   placeholder="Customer Name (optional)">
+                        </div>
+                        <div class="mb-2">
+                            <input type="text" name="customer_phone" class="form-control form-control-sm"
+                                   placeholder="Phone (optional)">
+                        </div>
+                        <div class="mb-2">
+                            <select name="payment_method" class="form-select form-select-sm">
+                                <option value="CASH">Cash</option>
+                                <option value="UPI">UPI</option>
+                                <option value="CARD">Card</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" name="transaction_reference" class="form-control form-control-sm"
+                                   placeholder="UPI/Card Ref (optional)">
+                        </div>
+                        <button type="submit" class="btn btn-success btn-lg w-100">
+                            <i class="bi bi-credit-card"></i> Complete Payment – ₹{{ grand_total }}
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

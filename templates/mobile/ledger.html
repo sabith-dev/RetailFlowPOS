@@ -1,0 +1,31 @@
+{% extends "mobile/base_mobile.html" %}
+{% block title %}Ledger – Mobile{% endblock %}
+{% block header_title %}Ledger{% endblock %}
+
+{% block content %}
+{% for e in entries %}
+<div class="card list-card shadow-sm">
+    <div class="card-body py-2 px-3">
+        <div class="d-flex justify-content-between">
+            <div>
+                <span class="badge {% if e.entry_type == 'SALE' %}bg-success{% elif e.entry_type == 'RETURN' %}bg-danger{% else %}bg-secondary{% endif %}">
+                    {{ e.get_entry_type_display }}
+                </span>
+                <div class="small mt-1">{{ e.description|truncatechars:40 }}</div>
+                <small class="text-muted">{{ e.created_at|date:"d M, H:i" }}</small>
+            </div>
+            <div class="text-end">
+                {% if e.credit %}
+                    <div class="text-success fw-bold">+₹{{ e.credit }}</div>
+                {% endif %}
+                {% if e.debit %}
+                    <div class="text-danger fw-bold">-₹{{ e.debit }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% empty %}
+<p class="text-muted text-center py-4">No entries yet.</p>
+{% endfor %}
+{% endblock %}

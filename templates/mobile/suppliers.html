@@ -1,0 +1,23 @@
+{% extends "mobile/base_mobile.html" %}
+{% block title %}Suppliers – Mobile{% endblock %}
+{% block header_title %}Suppliers{% endblock %}
+
+{% block content %}
+<a href="{% url 'suppliers:create' %}" class="btn btn-primary w-100 mb-3">
+    <i class="bi bi-plus-lg"></i> Add Supplier
+</a>
+
+{% for s in suppliers %}
+<div class="card list-card shadow-sm">
+    <div class="card-body py-2 px-3">
+        <div class="fw-semibold">{{ s.name }}</div>
+        <small class="text-muted">
+            {{ s.company_name|default:"" }}
+            {% if s.phone %} · {{ s.phone }}{% endif %}
+        </small>
+    </div>
+</div>
+{% empty %}
+<p class="text-muted text-center py-4">No suppliers yet.</p>
+{% endfor %}
+{% endblock %}

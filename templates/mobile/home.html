@@ -1,0 +1,72 @@
+{% extends "mobile/base_mobile.html" %}
+{% block title %}Dashboard – Mobile{% endblock %}
+{% block header_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="row g-2 mb-3">
+    <div class="col-6">
+        <div class="stat-card bg-primary text-white">
+            <div class="small opacity-75">Today's Sales</div>
+            <div class="fs-5 fw-bold">₹{{ today_revenue|floatformat:0 }}</div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="stat-card bg-success text-white">
+            <div class="small opacity-75">Orders</div>
+            <div class="fs-5 fw-bold">{{ today_orders }}</div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="stat-card bg-info text-white">
+            <div class="small opacity-75">Products</div>
+            <div class="fs-5 fw-bold">{{ total_products }}</div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="stat-card bg-warning text-dark">
+            <div class="small">Low Stock</div>
+            <div class="fs-5 fw-bold">{{ low_stock }}</div>
+        </div>
+    </div>
+</div>
+
+<h6 class="text-muted mb-2">Quick Actions</h6>
+<div class="row g-2 mb-4">
+    <div class="col-4">
+        <a href="{% url 'products:create' %}" class="btn btn-outline-primary w-100 py-3">
+            <i class="bi bi-plus-lg d-block fs-4"></i>
+            <small>Product</small>
+        </a>
+    </div>
+    <div class="col-4">
+        <a href="{% url 'billing:pos' %}" class="btn btn-outline-success w-100 py-3">
+            <i class="bi bi-cart-check d-block fs-4"></i>
+            <small>POS</small>
+        </a>
+    </div>
+    <div class="col-4">
+        <a href="{% url 'returns:create' %}" class="btn btn-outline-danger w-100 py-3">
+            <i class="bi bi-arrow-return-left d-block fs-4"></i>
+            <small>Return</small>
+        </a>
+    </div>
+</div>
+
+<h6 class="text-muted mb-2">Recent Sales</h6>
+{% for sale in recent_sales %}
+<div class="card list-card shadow-sm">
+    <div class="card-body py-2 px-3 d-flex justify-content-between align-items-center">
+        <div>
+            <div class="fw-semibold">{{ sale.invoice_number }}</div>
+            <small class="text-muted">{{ sale.customer_name }} · {{ sale.created_at|date:"H:i" }}</small>
+        </div>
+        <div class="text-end">
+            <div class="fw-bold text-success">₹{{ sale.grand_total }}</div>
+            <small class="badge bg-secondary">{{ sale.get_payment_method_display }}</small>
+        </div>
+    </div>
+</div>
+{% empty %}
+<p class="text-muted text-center">No sales yet today.</p>
+{% endfor %}
+{% endblock %}

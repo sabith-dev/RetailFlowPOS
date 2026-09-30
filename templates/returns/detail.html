@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Return #{{ ret.id }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Return #{{ ret.id }}</h2>
+        <a href="{% url 'returns:list' %}" class="btn btn-outline-secondary">Back</a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-borderless mb-0">
+                <tr><th width="180">Invoice</th><td><code>{{ ret.sale.invoice_number }}</code></td></tr>
+                <tr><th>Product</th><td>{{ ret.product.name }} ({{ ret.product.sku }})</td></tr>
+                <tr><th>Quantity Returned</th><td>{{ ret.quantity }}</td></tr>
+                <tr><th>Refund Amount</th><td class="fw-bold text-danger">₹{{ ret.refund_amount }}</td></tr>
+                <tr><th>Reason</th><td>{{ ret.reason }}</td></tr>
+                <tr><th>Notes</th><td>{{ ret.notes|default:"—" }}</td></tr>
+                <tr><th>Processed By</th><td>{{ ret.processed_by.get_full_name|default:ret.processed_by.username }}</td></tr>
+                <tr><th>Status</th>
+                    <td>
+                        {% if ret.status == "APPROVED" %}
+                            <span class="badge bg-success">Approved</span>
+                        {% else %}
+                            <span class="badge bg-secondary">{{ ret.status }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr><th>Date</th><td>{{ ret.created_at|date:"d M Y, H:i" }}</td></tr>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

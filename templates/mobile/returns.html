@@ -1,0 +1,23 @@
+{% extends "mobile/base_mobile.html" %}
+{% block title %}Returns – Mobile{% endblock %}
+{% block header_title %}Returns{% endblock %}
+
+{% block content %}
+<a href="{% url 'returns:create' %}" class="btn btn-danger w-100 mb-3">
+    <i class="bi bi-plus-lg"></i> Process Return
+</a>
+
+{% for r in returns %}
+<div class="card list-card shadow-sm">
+    <div class="card-body py-2 px-3 d-flex justify-content-between">
+        <div>
+            <div class="fw-semibold">{{ r.product.name }}</div>
+            <small class="text-muted">{{ r.sale.invoice_number }} · Qty: {{ r.quantity }}</small>
+        </div>
+        <div class="text-end text-danger fw-bold">₹{{ r.refund_amount }}</div>
+    </div>
+</div>
+{% empty %}
+<p class="text-muted text-center py-4">No returns yet.</p>
+{% endfor %}
+{% endblock %}

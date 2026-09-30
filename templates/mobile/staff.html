@@ -1,0 +1,58 @@
+{% extends "mobile/base_mobile.html" %}
+{% block title %}More – Mobile{% endblock %}
+{% block header_title %}More{% endblock %}
+
+{% block content %}
+<div class="list-group shadow-sm mb-3">
+    <a href="{% url 'dashboard:mobile_suppliers' %}" class="list-group-item list-group-item-action d-flex align-items-center">
+        <i class="bi bi-truck fs-4 me-3 text-primary"></i>
+        <div>
+            <div class="fw-semibold">Suppliers</div>
+            <small class="text-muted">Manage suppliers</small>
+        </div>
+    </a>
+    <a href="{% url 'accounts:staff_list' %}" class="list-group-item list-group-item-action d-flex align-items-center">
+        <i class="bi bi-people fs-4 me-3 text-info"></i>
+        <div>
+            <div class="fw-semibold">Staff</div>
+            <small class="text-muted">Manage staff members</small>
+        </div>
+    </a>
+    <a href="{% url 'dashboard:mobile_returns' %}" class="list-group-item list-group-item-action d-flex align-items-center">
+        <i class="bi bi-arrow-return-left fs-4 me-3 text-danger"></i>
+        <div>
+            <div class="fw-semibold">Returns</div>
+            <small class="text-muted">Product returns</small>
+        </div>
+    </a>
+    <a href="{% url 'dashboard:mobile_ledger' %}" class="list-group-item list-group-item-action d-flex align-items-center">
+        <i class="bi bi-journal-text fs-4 me-3 text-success"></i>
+        <div>
+            <div class="fw-semibold">Ledger</div>
+            <small class="text-muted">Financial ledger</small>
+        </div>
+    </a>
+    <a href="{% url 'dashboard:home' %}" class="list-group-item list-group-item-action d-flex align-items-center">
+        <i class="bi bi-display fs-4 me-3 text-secondary"></i>
+        <div>
+            <div class="fw-semibold">Desktop View</div>
+            <small class="text-muted">Switch to full admin</small>
+        </div>
+    </a>
+</div>
+
+<h6 class="text-muted mb-2">Active Staff</h6>
+{% for s in staff_list %}
+<div class="card list-card shadow-sm">
+    <div class="card-body py-2 px-3 d-flex justify-content-between">
+        <div>
+            <div class="fw-semibold">{{ s.user.get_full_name|default:s.user.username }}</div>
+            <small class="text-muted">{{ s.employee_id|default:s.user.username }}</small>
+        </div>
+        <span class="badge {% if s.role == 'ADMIN' %}bg-primary{% else %}bg-info text-dark{% endif %}">
+            {{ s.role }}
+        </span>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

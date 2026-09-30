@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block title %}Sales Report – RetailFlow POS{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0"><i class="bi bi-currency-rupee"></i> Sales Report</h2>
+        <div class="btn-group">
+            <a href="?period=7" class="btn btn-sm {% if period == 7 %}btn-primary{% else %}btn-outline-primary{% endif %}">7 Days</a>
+            <a href="?period=30" class="btn btn-sm {% if period == 30 %}btn-primary{% else %}btn-outline-primary{% endif %}">30 Days</a>
+            <a href="?period=90" class="btn btn-sm {% if period == 90 %}btn-primary{% else %}btn-outline-primary{% endif %}">90 Days</a>
+        </div>
+    </div>
+
+    <p class="text-muted">{{ start_date|date:"d M Y" }} → {{ end_date|date:"d M Y" }}</p>
+
+    <!-- Summary -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm bg-primary text-white">
+                <div class="card-body">
+                    <div class="small opacity-75">Total Sales</div>
+                    <div class="fs-4 fw-bold">₹{{ total_sales|floatformat:0 }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm bg-success text-white">
+                <div class="card-body">
+                    <div class="small opacity-75">Orders</div>
+                    <div class="fs-4 fw-bold">{{ total_orders }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm bg-info text-white">
+                <div class="card-body">
+                    <div class="small opacity-75">Avg Order Value</div>
+                    <div class="fs-4 fw-bold">₹{{ avg_order|floatformat:0 }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm bg-warning text-dark">
+                <div class="card-body">
+                    <div class="small">Total Discount</div>
+                    <div class="fs-4 fw-bold">₹{{ total_discount|floatformat:0 }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Payment Breakdown -->
+        <div class="col-md-5">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white fw-semibold">Payment Methods</div>
+                <div class="card-body p-0">
+                    <table class="table mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Method</th>
+                                <th>Orders</th>
+                                <th class="text-end">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in payment_breakdown %}
+                            <tr>
+                                <td>{{ p.payment_method }}</td>
+                                <td>{{ p.count }}</td>
+                                <td class="text-end">₹{{ p.amount|floatformat:0 }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr><td colspan="3" class="text-center text-muted">No data</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Products -->
+        <div class="col-md-7">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white fw-semibold">Top Products</div>
+                <div class="card-body p-0">
+                    <table class="table mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Product</th>
+                                <th>Qty Sold</th>
+                                <th class="text-end">Revenue</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in top_products %}
+                            <tr>
+                                <td>{{ p.product__name }} <small class="text-muted">({{ p.product__sku }})</small></td>
+                                <td>{{ p.qty }}</td>
+                                <td class="text-end">₹{{ p.revenue|floatformat:0 }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr><td colspan="3" class="text-center text-muted">No data</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

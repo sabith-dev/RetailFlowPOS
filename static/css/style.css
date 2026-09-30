@@ -1,0 +1,393 @@
+/* =====================================================
+   RetailFlow POS – Modern Attractive Theme
+   ===================================================== */
+
+:root {
+    --primary: #4f46e5;
+    --primary-dark: #4338ca;
+    --primary-light: #818cf8;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --info: #06b6d4;
+    --dark: #1e293b;
+    --gray: #64748b;
+    --light: #f1f5f9;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.12);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --transition: all 0.25s ease;
+}
+
+/* ---------- Base ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    background: linear-gradient(135deg, #f0f4ff 0%, #f8fafc 50%, #fef3f2 100%);
+    min-height: 100vh;
+    color: var(--dark);
+    line-height: 1.6;
+}
+
+/* ---------- Navbar ---------- */
+.navbar {
+    background: linear-gradient(135deg, var(--primary) 0%, #6366f1 100%) !important;
+    box-shadow: 0 2px 20px rgba(79, 70, 229, 0.3);
+    padding: 0.7rem 1rem;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: 0.3px;
+}
+
+.navbar-brand i {
+    margin-right: 6px;
+}
+
+.nav-link {
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 0.45rem 0.9rem !important;
+    transition: var(--transition);
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.navbar .badge {
+    font-size: 0.7rem;
+    padding: 0.3em 0.6em;
+}
+
+/* ---------- Cards ---------- */
+.card {
+    border: none;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    overflow: hidden;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.card-header {
+    background: var(--white) !important;
+    border-bottom: 1px solid #e2e8f0;
+    font-weight: 600;
+    padding: 1rem 1.25rem;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+/* ---------- Stat Cards (Dashboard) ---------- */
+.card.bg-primary,
+.card.bg-success,
+.card.bg-info,
+.card.bg-warning,
+.card.bg-danger {
+    border: none;
+    border-radius: var(--radius);
+    transition: var(--transition);
+}
+
+.card.bg-primary { background: linear-gradient(135deg, #4f46e5, #6366f1) !important; }
+.card.bg-success { background: linear-gradient(135deg, #059669, #10b981) !important; }
+.card.bg-info    { background: linear-gradient(135deg, #0891b2, #06b6d4) !important; }
+.card.bg-warning { background: linear-gradient(135deg, #d97706, #f59e0b) !important; }
+.card.bg-danger  { background: linear-gradient(135deg, #dc2626, #ef4444) !important; }
+
+.card.bg-primary:hover,
+.card.bg-success:hover,
+.card.bg-info:hover,
+.card.bg-warning:hover,
+.card.bg-danger:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    padding: 0.5rem 1.2rem;
+    transition: var(--transition);
+    border: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), #6366f1);
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.45);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #059669, #10b981);
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+}
+
+.btn-success:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #dc2626, #ef4444);
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    background: transparent;
+}
+
+.btn-outline-primary:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.05rem;
+}
+
+.btn-sm {
+    padding: 0.3rem 0.7rem;
+    font-size: 0.85rem;
+}
+
+/* ---------- Tables ---------- */
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background: #f8fafc !important;
+    color: var(--gray);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    border-bottom: 2px solid #e2e8f0;
+    padding: 0.85rem 1rem;
+}
+
+.table tbody td {
+    padding: 0.85rem 1rem;
+    vertical-align: middle;
+    border-color: #f1f5f9;
+}
+
+.table-hover tbody tr:hover {
+    background: #f8fafc;
+}
+
+.table code {
+    background: #eef2ff;
+    color: var(--primary);
+    padding: 0.2em 0.5em;
+    border-radius: 6px;
+    font-size: 0.85em;
+}
+
+/* ---------- Forms ---------- */
+.form-control,
+.form-select {
+    border-radius: var(--radius-sm);
+    border: 1.5px solid #e2e8f0;
+    padding: 0.6rem 0.9rem;
+    transition: var(--transition);
+    font-size: 0.95rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.form-control-lg {
+    padding: 0.75rem 1rem;
+    font-size: 1.05rem;
+}
+
+.form-label {
+    font-weight: 500;
+    color: var(--dark);
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
+}
+
+/* ---------- Badges ---------- */
+.badge {
+    font-weight: 500;
+    padding: 0.4em 0.7em;
+    border-radius: 6px;
+    font-size: 0.78rem;
+}
+
+/* ---------- Login Page ---------- */
+.min-vh-100 {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #a855f7 100%) !important;
+}
+
+.min-vh-100 .card {
+    border-radius: 20px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+}
+
+.min-vh-100 .card-body {
+    padding: 2.5rem !important;
+}
+
+.min-vh-100 .bi-shop {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ---------- POS Specific ---------- */
+.list-group-item {
+    border-color: #f1f5f9;
+    transition: var(--transition);
+}
+
+.list-group-item:hover {
+    background: #f8fafc;
+}
+
+.list-group-item-action:hover {
+    background: #eef2ff;
+}
+
+/* ---------- Alerts ---------- */
+.alert {
+    border: none;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+}
+
+/* ---------- List group (sidebar actions) ---------- */
+.list-group-item i {
+    width: 24px;
+    display: inline-block;
+}
+
+/* ---------- Page headers ---------- */
+h2 {
+    font-weight: 700;
+    color: var(--dark);
+}
+
+h2 i {
+    margin-right: 8px;
+    opacity: 0.85;
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* ---------- Invoice print ---------- */
+@media print {
+    .no-print,
+    .navbar,
+    .bottom-nav {
+        display: none !important;
+    }
+    body {
+        background: white !important;
+    }
+    .card {
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+    }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+    .fs-4 {
+        font-size: 1.2rem !important;
+    }
+    .card-body {
+        padding: 1rem;
+    }
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+}
+
+/* ---------- Smooth page load ---------- */
+main {
+    animation: fadeIn 0.35s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---------- Empty state ---------- */
+.text-muted.py-5,
+.text-muted.py-4 {
+    font-size: 0.95rem;
+}
+
+/* ---------- Dropdown ---------- */
+.dropdown-menu {
+    border: none;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg);
+    padding: 0.5rem;
+}
+
+.dropdown-item {
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+}
+
+.dropdown-item:hover {
+    background: #eef2ff;
+    color: var(--primary);
+}

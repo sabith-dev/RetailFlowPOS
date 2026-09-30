@@ -1,0 +1,41 @@
+{% extends "mobile/base_mobile.html" %}
+{% block title %}Products – Mobile{% endblock %}
+{% block header_title %}Products{% endblock %}
+
+{% block content %}
+<form method="get" class="mb-3">
+    <div class="input-group">
+        <input type="search" name="q" value="{{ q }}" class="form-control" placeholder="Search products...">
+        <button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
+    </div>
+</form>
+
+<a href="{% url 'products:create' %}" class="btn btn-primary w-100 mb-3">
+    <i class="bi bi-plus-lg"></i> Add Product
+</a>
+
+{% for p in products %}
+<div class="card list-card shadow-sm">
+    <div class="card-body py-2 px-3">
+        <div class="d-flex justify-content-between">
+            <div>
+                <div class="fw-semibold">{{ p.name }}</div>
+                <small class="text-muted">{{ p.sku }} {% if p.brand %}· {{ p.brand }}{% endif %}</small>
+            </div>
+            <div class="text-end">
+                <div class="fw-bold">₹{{ p.selling_price }}</div>
+                {% if p.is_out_of_stock %}
+                    <span class="badge bg-danger">Out</span>
+                {% elif p.is_low_stock %}
+                    <span class="badge bg-warning text-dark">{{ p.stock_quantity }}</span>
+                {% else %}
+                    <span class="badge bg-success">{{ p.stock_quantity }}</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% empty %}
+<p class="text-muted text-center py-4">No products found.</p>
+{% endfor %}
+{% endblock %}

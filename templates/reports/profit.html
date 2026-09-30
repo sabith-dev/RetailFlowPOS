@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Profit Report – RetailFlow POS{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0"><i class="bi bi-pie-chart"></i> Profit Report</h2>
+        <div class="btn-group">
+            <a href="?period=7" class="btn btn-sm {% if period == 7 %}btn-primary{% else %}btn-outline-primary{% endif %}">7 Days</a>
+            <a href="?period=30" class="btn btn-sm {% if period == 30 %}btn-primary{% else %}btn-outline-primary{% endif %}">30 Days</a>
+            <a href="?period=90" class="btn btn-sm {% if period == 90 %}btn-primary{% else %}btn-outline-primary{% endif %}">90 Days</a>
+        </div>
+    </div>
+
+    <p class="text-muted">{{ start_date|date:"d M Y" }} → {{ end_date|date:"d M Y" }}</p>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm bg-primary text-white">
+                <div class="card-body">
+                    <div class="small opacity-75">Total Revenue</div>
+                    <div class="fs-4 fw-bold">₹{{ total_revenue|floatformat:0 }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm bg-secondary text-white">
+                <div class="card-body">
+                    <div class="small opacity-75">Cost of Goods (COGS)</div>
+                    <div class="fs-4 fw-bold">₹{{ cogs|floatformat:0 }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm bg-danger text-white">
+                <div class="card-body">
+                    <div class="small opacity-75">Returns</div>
+                    <div class="fs-4 fw-bold">₹{{ total_returns|floatformat:0 }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm bg-success text-white">
+                <div class="card-body">
+                    <div class="small opacity-75">Gross Profit</div>
+                    <div class="fs-4 fw-bold">₹{{ gross_profit|floatformat:0 }}</div>
+                    <div class="small">Margin: {{ margin|floatformat:1 }}%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5>Profit Calculation</h5>
+            <table class="table table-borderless" style="max-width: 400px;">
+                <tr>
+                    <td>Total Revenue</td>
+                    <td class="text-end">₹{{ total_revenue }}</td>
+                </tr>
+                <tr>
+                    <td>(-) Cost of Goods Sold</td>
+                    <td class="text-end text-danger">- ₹{{ cogs }}</td>
+                </tr>
+                <tr>
+                    <td>(-) Returns / Refunds</td>
+                    <td class="text-end text-danger">- ₹{{ total_returns }}</td>
+                </tr>
+                <tr class="fw-bold fs-5 border-top">
+                    <td>Gross Profit</td>
+                    <td class="text-end text-success">₹{{ gross_profit }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

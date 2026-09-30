@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} – RetailFlow POS{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">{{ title }}</h2>
+        <a href="{% url 'returns:list' %}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form method="post" id="returnForm" novalidate>
+                {% csrf_token %}
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Invoice / Sale *</label>
+                        {{ form.sale }}
+                        {{ form.sale.errors }}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Product from Invoice *</label>
+                        {{ form.sale_item }}
+                        {{ form.sale_item.errors }}
+                        <small class="text-muted">Select invoice first, then product</small>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Return Quantity *</label>
+                        {{ form.quantity }}
+                        {{ form.quantity.errors }}
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Reason *</label>
+                        {{ form.reason }}
+                        {{ form.reason.errors }}
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Notes (optional)</label>
+                        {{ form.notes }}
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-check-lg"></i> Process Return
+                    </button>
+                    <a href="{% url 'returns:list' %}" class="btn btn-outline-secondary ms-2">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+// Simple dynamic product loading when invoice changes
+document.getElementById('id_sale')?.addEventListener('change', function() {
+    // For better UX you can later add AJAX. For now just submit hint.
+    // User can re-select after choosing invoice.
+});
+</script>
+{% endblock %}

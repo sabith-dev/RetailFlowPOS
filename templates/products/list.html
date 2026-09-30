@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Products – RetailFlow POS{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0"><i class="bi bi-box-seam"></i> Products</h2>
+        <a href="{% url 'products:create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-lg"></i> Add Product
+        </a>
+    </div>
+
+    <div class="card shadow-sm mb-3">
+        <div class="card-body">
+            <form method="get" class="row g-2">
+                <div class="col-md-8">
+                    <input type="search" name="q" value="{{ q }}" class="form-control"
+                           placeholder="Search by name, SKU, barcode or brand...">
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-outline-primary w-100">
+                        <i class="bi bi-search"></i> Search
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-white d-flex justify-content-between">
+            <span class="fw-semibold">All Products</span>
+            <span class="badge bg-secondary">{{ total }} items</span>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover mb-0 align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Name</th>
+                        <th>SKU</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Status</th>
+                        <th width="160">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in products %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'products:detail' p.pk %}" class="text-decoration-none fw-semibold">
+                                {{ p.name }}
+                            </a>
+                            {% if p.brand %}<br><small class="text-muted">{{ p.brand }}</small>{% endif %}
+                        </td>
+                        <td><code>{{ p.sku }}</code></td>
+                        <td>{{ p.category|default:"—" }}</td>
+                        <td>₹{{ p.selling_price }}</td>
+                        <td>
+                            {% if p.is_out_of_stock %}
+                                <span class="badge bg-danger">Out of stock</span>
+                            {% elif p.is_low_stock %}
+                                <span class="badge bg-warning text-dark">{{ p.stock_quantity }} (Low)</span>
+                            {% else %}
+                                <span class="badge bg-success">{{ p.stock_quantity }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if p.is_active %}
+                                <span class="badge bg-success">Active</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Inactive</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'products:edit' p.pk %}" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a href="{% url 'products:delete' p.pk %}" class="btn btn-sm btn-outline-danger">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center text-muted py-5">
+                            No products found.
+                            <a href="{% url 'products:create' %}">Add the first product</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
